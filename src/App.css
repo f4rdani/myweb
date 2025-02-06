@@ -45,3 +45,26 @@ html, body, #root {
 .read-the-docs {
   color: #888;
 }
+
+
+/* untuk button */
+.btn-modern {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #007bff, #6610f2);
+  border: none;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+.btn-modern:hover {
+  background: linear-gradient(135deg, #6610f2, #007bff);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+
