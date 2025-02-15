@@ -1,20 +1,55 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-// import Home from './pages/Home';
-// import NotFound from './pages/NotFound';
-// import LoginForm from './components/LoginForm';
-// import Dashboard from './pages/Dashboard';
-// import UserList from './components/UserList';
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NotFound from './pages/NotFound';
+import Dashboard from './pages/Dashboard';
+import DashboardLayout from "./components/DashboardLayout";
 import Welcome from './pages/welcome';
 import './App.css';
-import { User, Map, Code, PenTool, Palette, Server } from 'lucide-react';
-function App() {
+import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AdminDashboard from './admin/AdminDashboard';
+import DashboardLayoutAdm from './admin/DashboardAdminLay';
+import AdminLogin from './admin/AdminLogin';
 
+function App() {
   return (
-      <div >
-        <Welcome />
-      </div>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <ToastContainer />
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/adm" element={<AdminLogin />} />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <DashboardLayoutAdm />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<AdminDashboard />} />
+            </Route>
+            {/* Rute dashboard dilindungi */}
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute requiredRole="user">
+                  <DashboardLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Dashboard />} />
+            </Route>
+            {/* Jika route tidak ditemukan */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

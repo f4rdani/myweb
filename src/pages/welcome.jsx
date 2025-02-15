@@ -1,38 +1,54 @@
-import React, { useState, useEffect, Suspense, lazy } from "react";
-import Login from "../components/Login";
+// src/pages/welcome.jsx
+import React, { useContext } from "react";
 import TypingEffect from "../components/TypingEffect";
 import AboutMe from "../components/AboutMe";
 import MyWork from "../components/MyWork";
-import"../assets/darkmode.css";
-
+import "../assets/darkmode.css";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Welcome = () => {
-  // Ambil tema dari localStorage atau default ke dark mode
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "light" ? false : true;
-  });
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
 
-  // Update tema di localStorage setiap kali darkMode berubah
-  useEffect(() => {
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
+  // Custom CSS tambahan untuk elemen-elemen tertentu
+  const customCSS = `
+    .sticky-navbar {
+      position: sticky !important;
+      top: 0;
+      z-index: 1050;
+      transition: all 0.3s ease;
+    }
+    .main-section {
+      background-color: #111827;
+      min-height: 100vh;
+    }
+  `;
 
   return (
     <>
+      {/* Sisipkan custom CSS */}
+      <style>{customCSS}</style>
       
-      <div className={`d-flex flex-column min-vh-100 ${darkMode ? "dark-theme text-light" : "bg-light text-dark"}`}>
+      {/* Container utama: kelas berubah berdasarkan nilai darkMode */}
+      <div className={`d-flex flex-column  ${darkMode ? "dark-theme text-light" : "bg-light text-dark"}`}>
+        
         {/* Navbar */}
-        <nav className={`navbar navbar-expand-lg sticky-top ${darkMode ? "navbar-dark" : "navbar-light bg-white shadow-sm"}`}>
+        <nav className={`navbar navbar-expand-lg sticky-navbar ${darkMode ? "navbar-dark" : "navbar-light bg-white shadow-sm"}`}>
           <div className="container">
-            <a className="navbar-brand" href="#">My Portfolio</a>
+            <a className="navbar-brand" href="/">My Portfolio</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto d-flex align-items-center">
-                <li className="nav-item me-4"><a className="nav-link" href="#My-Work">My Work</a></li>
-                <li className="nav-item me-4"><a className="nav-link" href="#about">About</a></li>
-                <li className="nav-item me-4"><a className="nav-link" href="#contact">Contact</a></li>
+                <li className="nav-item me-4">
+                  <a className="nav-link" href="#features">Features</a>
+                </li>
+                <li className="nav-item me-4">
+                  <a className="nav-link" href="#about">About</a>
+                </li>
+                <li className="nav-item me-4">
+                  <a className="nav-link" href="#contact">Contact</a>
+                </li>
                 <li className="nav-item">
                   <div className="form-check form-switch">
                     <input
@@ -52,35 +68,43 @@ const Welcome = () => {
           </div>
         </nav>
 
-        {/* Rest of the component remains the same */}
+        {/* Konten Utama */}
         <TypingEffect />
 
+        {/* Section AboutMe */}
         <section id="about">
           <AboutMe />
         </section>
-
-        <section id="My-Work">
+        <section id="about">
           <MyWork />
         </section>
 
-        <section id="contact" className="container py-5 text-center">
-          <div className="content-wrapper rounded-4 p-4 p-md-5 mt-4">
-            <h2 className="fw-bold mb-3">Get in Touch</h2>
-            <p>Feel free to contact us for more information.</p>
-          </div>
-        </section>
-
-        <Login />
-
-        <footer className="footer text-white text-center py-4 mt-auto">
+        {/* Anda dapat menambahkan section lainnya, misalnya MyWork, Contact, atau Footer */}
+        <footer className={`footer mt-auto ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}>
           <div className="container">
-            <p className="mb-0">&copy; {new Date().getFullYear()} HonoStyle. All Rights Reserved.</p>
+            <div className="row align-items-center">
+              <div className="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <p className="mb-0">&copy; {new Date().getFullYear()} FardaniAz. All Rights Reserved.</p>
+              </div>
+              <div className="col-md-6 text-center text-md-end">
+                <ul className="list-inline mb-0">
+                  <li className="list-inline-item me-3">
+                    <a href="#" className="text-decoration-none">Privacy Policy</a>
+                  </li>
+                  <li className="list-inline-item me-3">
+                    <a href="#" className="text-decoration-none">Terms of Service</a>
+                  </li>
+                  <li className="list-inline-item">
+                    <a href="#" className="text-decoration-none">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
     </>
   );
 };
-
 
 export default Welcome;

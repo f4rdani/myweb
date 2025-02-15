@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PenTool, Palette, Code, Server } from 'lucide-react';
+import Program from '../components/Program';
+import IllustrationGallery from './Art';
 
 const MyWork = () => {
+  // State untuk mengontrol tampilan komponen
+  const [activeSection, setActiveSection] = useState(null);
+
   const customCSS = `
     .work-card {
-      background-color: rgba(33, 37, 41, 0.9);
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .work-card:hover.illustration {
@@ -24,11 +29,6 @@ const MyWork = () => {
       background-color: rgba(234, 179, 8, 0.3);
     }
 
-    .main-section {
-      background-color: #111827;
-      min-height: 100vh;
-    }
-
     .content-wrapper {
       background-color: rgba(17, 24, 39, 0.8);
     }
@@ -38,12 +38,21 @@ const MyWork = () => {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    .section-transition {
+      transition: all 0.3s ease-in-out;
+    }
   `;
+
+  // Handler untuk mengatur section yang aktif
+  const handleSectionClick = (section) => {
+    setActiveSection(activeSection === section ? null : section);
+  };
 
   return (
     <>
       <style>{customCSS}</style>
-      <div className="main-section py-5">
+      <div className="py-5">
         <div className="container py-4">
           <div className="content-wrapper rounded-4 p-4 p-md-5 shadow-lg text-white">
             {/* Header */}
@@ -55,7 +64,10 @@ const MyWork = () => {
             <div className="row g-4">
               {/* Illustration */}
               <div className="col-lg-6">
-                <div className="work-card illustration rounded-3 p-4">
+                <div 
+                  className={`work-card illustration rounded-3 p-4 ${activeSection === 'illustration' ? 'bg-opacity-25 bg-purple-400' : ''}`}
+                  onClick={() => handleSectionClick('illustration')}
+                >
                   <div className="d-flex gap-3">
                     <PenTool className="text-purple-400" size={24} />
                     <div>
@@ -68,7 +80,10 @@ const MyWork = () => {
 
               {/* Graphic Design */}
               <div className="col-lg-6">
-                <div className="work-card design rounded-3 p-4">
+                <div 
+                  className={`work-card design rounded-3 p-4 ${activeSection === 'design' ? 'bg-opacity-25 bg-blue-400' : ''}`}
+                  onClick={() => handleSectionClick('design')}
+                >
                   <div className="d-flex gap-3">
                     <Palette className="text-blue-400" size={24} />
                     <div>
@@ -81,7 +96,10 @@ const MyWork = () => {
 
               {/* Programming */}
               <div className="col-lg-6">
-                <div className="work-card programming rounded-3 p-4">
+                <div 
+                  className={`work-card programming rounded-3 p-4 ${activeSection === 'programming' ? 'bg-opacity-25 bg-green-400' : ''}`}
+                  onClick={() => handleSectionClick('programming')}
+                >
                   <div className="d-flex gap-3">
                     <Code className="text-green-400" size={24} />
                     <div>
@@ -94,7 +112,10 @@ const MyWork = () => {
 
               {/* Backend Development */}
               <div className="col-lg-6">
-                <div className="work-card backend rounded-3 p-4">
+                <div 
+                  className={`work-card backend rounded-3 p-4 ${activeSection === 'backend' ? 'bg-opacity-25 bg-yellow-400' : ''}`}
+                  onClick={() => handleSectionClick('backend')}
+                >
                   <div className="d-flex gap-3">
                     <Server className="text-yellow-400" size={24} />
                     <div>
@@ -105,8 +126,13 @@ const MyWork = () => {
                 </div>
               </div>
             </div>
-
           </div>
+        </div>
+
+        {/* Content Sections */}
+        <div className="section-transition">
+          {activeSection === 'programming' && <Program />}
+          {activeSection === 'illustration' && <IllustrationGallery />}
         </div>
       </div>
     </>
