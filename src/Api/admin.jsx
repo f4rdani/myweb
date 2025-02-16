@@ -58,6 +58,21 @@ export const adminService = {
     }
   },
 
+  async getArtworksGalery() {
+    try {
+      const response = await fetch(`${BASE_URL}/art_galery`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+      });
+      return await handleResponse(response);
+    } catch (error) {
+      throw new ApiError('Failed to fetch artworks', 500, error);
+    }
+  },
+  
   async addArtwork(formData) {
     try {
       if (!(formData instanceof FormData)) {

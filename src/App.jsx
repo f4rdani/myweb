@@ -13,7 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminDashboard from './admin/AdminDashboard';
 import DashboardLayoutAdm from './admin/DashboardAdminLay';
 import AdminLogin from './admin/AdminLogin';
-
+import LoginLumen from './lumen/lumenlogin';
+import LumenDashboard from './lumen/lumendashbord';
 function App() {
   return (
     <ThemeProvider>
@@ -22,6 +23,8 @@ function App() {
           <ToastContainer />
           <Routes>
             <Route path="/" element={<Welcome />} />
+            <Route path="/lumen" element={<LoginLumen />} />
+            <Route path="/lumendashboard" element={<LumenDashboard />} />
             <Route path="/adm" element={<AdminLogin />} />
             <Route 
               path="/admin" 
