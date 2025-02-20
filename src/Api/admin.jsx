@@ -1,4 +1,4 @@
-// src/Api/admin.js
+// src/Api/admin.jsx
 const BASE_URL = 'http://localhost:5000';
 
 // Custom error class untuk API errors
@@ -211,6 +211,22 @@ export const adminService = {
       return await handleResponse(response);
     } catch (error) {
       throw new ApiError('Failed to delete user', 500, error);
+    }
+  },
+
+  // Fungsi untuk mengambil statistik
+  async getVisitorStats(timeRange = '30d') {
+    try {
+      const response = await fetch(`${BASE_URL}/api/stats?range=${timeRange}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+      });
+      return await handleResponse(response);
+    } catch (error) {
+      throw new ApiError('Failed to fetch visitor stats', 500, error);
     }
   },
 };

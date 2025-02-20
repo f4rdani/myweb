@@ -15,6 +15,8 @@ import DashboardLayoutAdm from './admin/DashboardAdminLay';
 import AdminLogin from './admin/AdminLogin';
 import LoginLumen from './lumen/lumenlogin';
 import LumenDashboard from './lumen/lumendashbord';
+import ConfirmEmail from './pages/ConfirmEmail';
+import ResetPassword from './pages/ResetPassword';
 function App() {
   return (
     <ThemeProvider>
@@ -47,6 +49,8 @@ function App() {
             >
               <Route index element={<Dashboard />} />
             </Route>
+            <Route path="/confirm-email" element={<ConfirmEmail />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             {/* Jika route tidak ditemukan */}
             <Route path="*" element={<NotFound />} />
           </Routes>

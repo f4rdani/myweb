@@ -6,6 +6,7 @@ import UserList from './UserList';
 import { Trash2, Plus, Image, AlertCircle, Edit2 } from 'lucide-react';
 import { ThemeContext } from '../context/ThemeContext';
 import { toast } from 'react-toastify';
+import DashboardStats from './components/DashboardStats';
 
 const BACKEND_URL = 'http://localhost:5000';
 
@@ -153,8 +154,10 @@ function AdminDashboard() {
       <style>{customCSS}</style>
       <div className={`min-h-screen py-8 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="container mx-auto px-4">
+          <div className={`rounded-lg shadow-lg p-6 mb-8 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+            <DashboardStats />
+          </div>
           <div className={`rounded-lg shadow-lg p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-            {/* Header Section */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-3xl font-bold dashboard-header">Art Galery</h2>
               <button 
@@ -166,7 +169,6 @@ function AdminDashboard() {
               </button>
             </div>
 
-            {/* Form Section */}
             {showForm && (
               <div className={`mb-8 p-6 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
                 <AdminForm 
@@ -177,7 +179,6 @@ function AdminDashboard() {
               </div>
             )}
 
-            {/* Table Section */}
             <div className="overflow-x-auto">
               {isLoading ? (
                 <div className="text-center py-8">

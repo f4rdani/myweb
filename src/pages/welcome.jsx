@@ -1,5 +1,5 @@
 // src/pages/welcome.jsx
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import TypingEffect from "../components/TypingEffect";
 import AboutMe from "../components/AboutMe";
 import MyWork from "../components/MyWork";
@@ -8,6 +8,19 @@ import { ThemeContext } from "../context/ThemeContext";
 
 const Welcome = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
+  useEffect(() => {
+    // Panggil endpoint untuk melacak kunjungan
+    fetch('http://localhost:5000/api/track-visitor', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => console.log('Visitor tracked:', data))
+      .catch(error => console.error('Error tracking visitor:', error));
+  }, []);
 
   // Custom CSS tambahan untuk elemen-elemen tertentu
   const customCSS = `

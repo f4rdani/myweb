@@ -11,12 +11,17 @@ const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(AuthContext);
   const { darkMode } = useContext(ThemeContext);
-  useEffect(() => {
-    document.title = "Login Admin";
-  }, []);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect ke /admin jika sudah login
+    if (isAuthenticated) {
+      navigate('/admin');
+    }
+    document.title = "Login Admin";
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +78,7 @@ const AdminLogin = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                className={`h-12 pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
                   darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'
                 }`}
                 required
@@ -92,7 +97,7 @@ const AdminLogin = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                className={`h-12 pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
                   darkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'
                 }`}
                 required
